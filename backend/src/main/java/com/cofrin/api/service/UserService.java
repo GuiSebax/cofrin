@@ -3,6 +3,8 @@ package com.cofrin.api.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cofrin.api.dto.CreateUserRequest;
+import com.cofrin.api.dto.UserResponse;
 import com.cofrin.api.entity.User;
 import com.cofrin.api.exception.EmailAlreadyExistsException;
 import com.cofrin.api.repository.UserRepository;
@@ -16,14 +18,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User create(User user) {
+    public UserResponse create(CreateUserRequest request) {
 
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new EmailAlreadyExistsException("Email já cadastrado");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setName(request.name());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
 
-        return userRepository.save(user);
+        return UserResponse.fromEntity(userRepository.save(user));
     }
 }
