@@ -1,5 +1,7 @@
 package com.cofrin.api.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.cofrin.api.dto.AccountResponse;
@@ -19,7 +21,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
 
-    public AccountResponse create(CreateAccountRequest request, Long userId) {
+    public AccountResponse create(CreateAccountRequest request, UUID userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));

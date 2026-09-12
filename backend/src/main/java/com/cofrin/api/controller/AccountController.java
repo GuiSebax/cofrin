@@ -1,5 +1,7 @@
 package com.cofrin.api.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<AccountResponse> createAccount(@RequestBody CreateAccountRequest request,
-            @RequestParam Long userId) {
+            @RequestParam UUID userId) {
         AccountResponse response = service.create(request, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

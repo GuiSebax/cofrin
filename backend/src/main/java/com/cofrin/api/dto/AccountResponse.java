@@ -2,12 +2,13 @@ package com.cofrin.api.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.cofrin.api.entity.Account;
 import com.cofrin.api.enums.AccountType;
 
 public record AccountResponse(
-        Long id,
+        UUID id,
         String name,
         AccountType type,
         BigDecimal initialBalance,

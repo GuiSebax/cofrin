@@ -1,11 +1,12 @@
 package com.cofrin.api.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.cofrin.api.entity.User;
 
 public record UserResponse(
-		Long id,
+		UUID id,
 		String name,
 		String email,
 		LocalDateTime createdAt) {
