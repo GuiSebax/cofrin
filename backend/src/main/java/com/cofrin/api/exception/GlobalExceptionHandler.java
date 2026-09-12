@@ -14,12 +14,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleEmailExists(EmailAlreadyExistsException ex) {
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now());
+        return build(HttpStatus.CONFLICT, ex.getMessage());
+    }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+        return build(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    public ResponseEntity<ErrorResponse> build(HttpStatus status, String message) {
+        ErrorResponse error = new ErrorResponse(status.value(), message, LocalDateTime.now());
+        return ResponseEntity.status(status).body(error);
     }
 
 }
